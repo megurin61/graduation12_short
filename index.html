@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>料理レシピ検索アプリ</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+
+<body>
+ <!-- 画像を表示 -->
+ <div class="fullscreen-image-container">
+    <img 
+        src="https://media.istockphoto.com/id/1350787226/ja/%E3%82%B9%E3%83%88%E3%83%83%E3%82%AF%E3%83%95%E3%82%A9%E3%83%88/%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%A7%E3%81%8A%E3%81%84%E3%81%97%E3%81%84%E4%B8%AD%E8%8F%AF%E6%96%99%E7%90%86%E3%82%92%E9%A3%9F%E3%81%B9%E3%82%8B%E5%8F%8B%E4%BA%BA.jpg?s=612x612&w=0&k=20&c=lKcwJi7Dl3Dg-Uj6ZUXQ1BjKV7wUVy4ZfCCCygOavzE=" 
+        alt="Delicious Chinese Food" 
+        class="fullscreen-image">
+    <h1 class="title">Recipe Search App</h1>
+    <div class="search-container">
+        <input type="text" id="search-box" placeholder="Search recipe..." />
+        <button id="search-button">Search</button>
+    </div>
+</div>
+<!-- 他のコンテンツ -->
+
+    <div class="container">
+        <div class="container">
+            <h1 class="title">Recipe Search App</h1>
+            <input type="text" id="search-box" placeholder="Search recipe..." />
+            <button id="search-button">Search</button>
+        
+        
+            <div id="alphabet-buttons">
+            <button class="alphabet-button">A</button>
+            <button class="alphabet-button">B</button>
+            <button class="alphabet-button">C</button>
+            <button class="alphabet-button">D</button>
+            
+        </div>
+
+        <h2>Cooking Recipe List</h2>
+        <ul id="recipe-list"></ul>
+    </div>
+
+    <div class="modal-overlay"></div>
+    <div class="modal" id="recipe-modal">
+        <button class="close-button" id="close-modal">Close</button>
+        <h2 id="modal-title"></h2>
+        <img id="modal-image" src="" alt=""
+            style="width: 100%; height: auto; border-radius: 10px; margin-bottom: 10px;">
+        <p id="modal-description"></p>
+        <h3>Ingredients:</h3>
+        <ul id="modal-ingredients"></ul>
+        <h3>Instructions:</h3>
+        <ol id="modal-instructions"></ol>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            var recipes = [
+
+
+
+                // 他のレシピデータをここに追加
+
+                {
+                    name: "Bacon and Asparagus Stir-fry",
+                    description: "Quick and flavorful stir-fry with bacon and asparagus.",
+                    image: "beacon aspar.jpg",
+                    ingredients: {
+                        "Main ingredients": [
+                            "100g bacon (sliced)",
+                            "1 bunch asparagus (cut into pieces)",
+                            "1 tbsp soy sauce",
+                            "1 tbsp butter"
+                        ]
+                    },
+                    instructions: [
+                        "Cook bacon in a pan until crispy.",
+                        "Add asparagus and stir-fry until tender.",
+                        "Stir in soy sauce and butter. Serve warm."
+                    ]
+                },
+                {
+                    name: "Braised Pork Belly(Kakuni)",
+                    description: "Rich and tender pork belly braised in a savory soy-based sauce.",
+                    image: "kakuni.jpg",
+                    ingredients: {
+                        "Main ingredients": [
+                            "400g pork belly (cut into chunks)",
+                            "2 cups water",
+                            "1/4 cup soy sauce",
+                            "1/4 cup sake",
+                            "1/4 cup mirin",
+                            "2 tbsp sugar",
+                            "1 piece ginger (sliced)"
+                        ]
+                    },
+                    instructions: [
+                        "Sear pork belly in a pot until browned.",
+                        "Add water, soy sauce, sake, mirin, sugar, and ginger.",
+                        "Simmer over low heat until pork is tender and sauce is reduced. Serve warm."
+                    ]
+                },
+                {
+                    name: "Chicken Nanban",
+                    description: "Crispy fried chicken with a sweet and tangy sauce.",
+                    image: "Chicken Nanban.webp",
+                    ingredients: {
+                        "Main ingredients": [
+                            "200g chicken thigh (cut into pieces)",
+                            "1/2 cup flour",
+                            "1 egg (beaten)",
+                            "Oil for frying"
+                        ],
+                        "For the sauce": [
+                            "3 tbsp soy sauce",
+                            "2 tbsp vinegar",
+                            "1 tbsp sugar"
+                        ],
+                        "For serving": [
+                            "Tartar sauce"
+                        ]
+                    },
+                    instructions: [
+                        "Coat chicken with flour and egg, then deep fry until golden brown.",
+                        "Simmer sauce ingredients in a pan and coat the fried chicken.",
+                        "Serve with tartar sauce on the side."
+                    ]
+                },
+              
+
+                {
+                    name: "Egg Omurice",
+                    description: "Delicious fluffy egg omurice recipe.",
+                    image: "adpDSC_2383.jpg",
+                    ingredients: {
+                        "For the fried rice": [
+                            '<a href="https://megurin61.github.io/Rice_EC/" target="_blank">1 cup cooked white rice</a>', // リンクを追加,
+                            "50g chicken breast or thigh (cut into small pieces)",
+                            "1/4 onion (finely chopped)",
+                            "1/4 carrot (finely chopped)",
+                            "1/4 green bell pepper (optional, finely chopped)",
+                            "2 tbsp ketchup",
+                            "1 tbsp soy sauce",
+                            "1 tbsp vegetable oil",
+                            "Salt and pepper to taste"
+                        ],
+                        "For the omelette": [
+                            "2 large eggs",
+                            "1 tbsp milk",
+                            "1 tsp butter"
+                        ],
+                        "For garnish": [
+                            "Extra ketchup"
+                        ]
+                    },
+                    instructions: [
+                        "Heat vegetable oil in a frying pan over medium heat. Sauté the onion, carrot, and bell pepper.",
+                        "Add chicken and cook until done. Mix in rice, soy sauce, and ketchup.",
+                        "Make the omelette: Whisk eggs with milk. Cook in a pan with butter until just set.",
+                        "Place rice on a plate, cover with the omelette, and garnish with ketchup."
+                    ]
+                },
+               
+            ];
+
+            displayRecipes(recipes);
+
+// Search by input box
+$('#search-button').click(() => {
+    const query = $('#search-box').val().trim();
+    if (query.length > 0) {
+        const filtered = recipes.filter(recipe =>
+            recipe.name.trim().toLowerCase().startsWith(query.toLowerCase())
+        );
+        $('#recipe-list').empty();
+        displayRecipes(filtered);
+    } else {
+        alert("Please enter a letter to search.");
+    }
+});
+
+// Search by alphabet button
+$('.alphabet-button').click(function () {
+    const letter = $(this).text().toLowerCase();
+    const filtered = recipes.filter(recipe =>
+        recipe.name.trim().toLowerCase().startsWith(letter)
+    );
+    $('#recipe-list').empty();
+    displayRecipes(filtered);
+});
+
+// Display recipes in the list
+function displayRecipes(recipeArray) {
+    if (recipeArray.length > 0) {
+        recipeArray.forEach(function (recipe) {
+            var recipeHtml = '<li>' +
+                '<a href="#" class="recipe-link" data-name="' + recipe.name + '">' + recipe.name + '</a>' +
+                '</li>';
+            $('#recipe-list').append(recipeHtml);
+        });
+
+        $('.recipe-link').click(function (e) {
+            e.preventDefault();
+            var recipeName = $(this).data('name');
+            var recipe = recipes.find(function (r) {
+                return r.name === recipeName;
+            });
+
+            if (recipe) {
+                $('#modal-title').text(recipe.name);
+                $('#modal-description').text(recipe.description);
+                $('#modal-image').attr('src', recipe.image);
+                $('#modal-ingredients').empty();
+                $('#modal-instructions').empty();
+
+                if (recipe.ingredients) {
+                    for (var section in recipe.ingredients) {
+                        if (recipe.ingredients.hasOwnProperty(section)) {
+                            var sectionHtml = '<h4>' + section + '</h4><ul>';
+                            recipe.ingredients[section].forEach(function (ingredient) {
+                                sectionHtml += '<li>' + ingredient + '</li>';
+                            });
+                            sectionHtml += '</ul>';
+                            $('#modal-ingredients').append(sectionHtml);
+                        }
+                    }
+                }
+
+                if (recipe.instructions) {
+                    recipe.instructions.forEach(function (step) {
+                        $('#modal-instructions').append('<li>' + step + '</li>');
+                    });
+                }
+
+                $('.modal-overlay').show();
+                $('#recipe-modal').show();
+            }
+        });
+    } else {
+        $('#recipe-list').append('<li>No recipes found.</li>');
+    }
+}
+
+$('#close-modal, .modal-overlay').click(function () {
+    $('.modal-overlay').hide();
+    $('#recipe-modal').hide();
+});
+});
+</script>
+    </script>
+</body>
+
+</html>
